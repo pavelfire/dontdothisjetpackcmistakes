@@ -27,6 +27,16 @@ class MainActivity : ComponentActivity() {
             val unDoneTodos = remember(todos){
                 todos.filter{ !it.isDone }
             }
+            val doneTodosDerived by remember {
+                derivedStateOf {
+                    todos.filter { it.isDone}
+                }
+            }
+            val unDoneTodosDerived by remember {
+                derivedStateOf {
+                    todos.filter { !it.isDone}
+                }
+            }
             LazyColumn {
                 item {
                     Text(text = "DONE")
@@ -34,11 +44,27 @@ class MainActivity : ComponentActivity() {
                 items(doneTodos) {
                     Text(text = it.title)
                 }
+
+                // repeat another way
+                item {
+                    Text(text = "DONE repeat another way")
+                }
+                items(doneTodosDerived) {
+                    Text(text = it.title)
+                }
                 
                 item { 
                     Text(text = "UNDONE")
                 }
                 items(unDoneTodos) {
+                    Text(text = it.title)
+                }
+
+                // repeat another way
+                item {
+                    Text(text = "UNDONE repeat another way")
+                }
+                items(unDoneTodosDerived) {
                     Text(text = it.title)
                 }
             }
@@ -57,7 +83,7 @@ var todos = listOf<Todo>(
     Todo("Cook dinner", true),
     Todo("Learn JetPack Compose", false),
     Todo("Meet girl from Tinder", false),
-    Todo("Find Adroid Developer work", false),
+    Todo("Find Android Developer work", false),
 
 )
 
