@@ -21,18 +21,24 @@ class MainActivity : ComponentActivity() {
             var todos by remember {
                 mutableStateOf(todos)
             }
+            val doneTodos = remember(todos){
+                todos.filter{ it.isDone }
+            }
+            val unDoneTodos = remember(todos){
+                todos.filter{ !it.isDone }
+            }
             LazyColumn {
                 item {
                     Text(text = "DONE")
                 }
-                items(todos.filter { it.isDone}) {
+                items(doneTodos) {
                     Text(text = it.title)
                 }
                 
                 item { 
                     Text(text = "UNDONE")
                 }
-                items(todos.filter { !it.isDone}) {
+                items(unDoneTodos) {
                     Text(text = it.title)
                 }
             }
